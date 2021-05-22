@@ -1,16 +1,30 @@
 import express from "express";
 import http from "http";
 import {Server} from "socket.io";
+import {PrismaCtx, ChalkColors} from "./types/pruster";
 import {EVENTS} from "./events";
+import chalk from "chalk";
 export default class Pruster {
     private readonly expressCtx: express.Express
     private readonly server: http.Server
+    private debug = false
     private io: Server
-    constructor(context: express.Express) {
+    private log(msg: string, color: ChalkColors): void {
+        if (this.debug) {
+            console.log(chalk[color](msg))
+        }
+    }
+    constructor(context: express.Express, dbConfig: Partial<PrismaCtx>, debug = false) {
         this.expressCtx = context;
         this.server = http.createServer(this.expressCtx);
         this.io = new Server(this.server);
-
+        this.debug = debug
+        if (!dbConfig.Write) {
+            throw new Error("No Prisma context was specified!")
+        } else if (!dbConfig.Read) {
+            dbConfig.Read = dbConfig.Write
+            this.log("Running database driver without read replicas", "yellow")
+        }
 
     }
     public listen() {
