@@ -29,12 +29,12 @@ export default class Pruster {
     }
     public listen() {
         this.io.on('connection', (socket) => {
-            this.io.emit(EVENTS.USER_CONNECTED, {name: socket.data.usernamename || "Anonim user"})
+            this.io.emit(EVENTS.USER_CONNECTED, {name: socket.data.username || "Anonim user"})
             socket.on(EVENTS.CHAT_MESSAGE, (msg) => {
                 this.io.emit(EVENTS.CHAT_MESSAGE, msg);
             });
             socket.on('disconnect', () => {
-                this.io.emit(EVENTS.USER_LEFT, {name: socket.data.usernamename || "Anonim user"})
+                this.io.emit(EVENTS.USER_LEFT, {name: socket.data.username || "Anonim user"})
             });
         });
     }
