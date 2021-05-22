@@ -1,0 +1,12 @@
+{
+  "name": "pruster",
+  "version": "1.0.0",
+  "description": "Chat API",
+  "main": "dist/pruster.js",
+  "author": "wowjeez",
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.11",
+    "socket.io": "^4.1.2"
+  }
+}
