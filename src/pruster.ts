@@ -38,4 +38,7 @@ export default class Pruster {
             });
         });
     }
+    public set debugMode(status: boolean) {
+        this.debug = status
+    }
 }
